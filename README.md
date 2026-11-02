@@ -6,7 +6,40 @@ Lumen Research 是一个面向 AI 科研的 Agent Skill。它将文献调研、�
 
 它既可以参与完整研究流程，也可以只解决一个具体任务：比如核查某个 novelty claim、设计一组消融实验、解释统计结果，或逐条回应审稿人。
 
-> 当前状态：本地初版。公开发布前仍需完成来源与许可核验、真实任务测试和作者信息确认。
+> 当前状态：私有仓库。除整合入口外，仓库同时保存本地完整论文写作 skill，便于换电脑原样迁移。
+
+## 完整论文写作 skill
+
+**需要原来完整的顶会论文写作规则，请直接使用 `$ccfa-paper-writing`，而不是只安装整合版 `lumen-research`。**
+
+| 目录 | 内容 | 保存方式 |
+| --- | --- | --- |
+| [ccfa-paper-writing](skills/ccfa-paper-writing/SKILL.md) | 完整 CCF-A 论文写作与排版规范 | 本地原版逐文件复制，保留规则、参考资料、脚本和配置 |
+| [edit-article](skills/edit-article/SKILL.md) | 文章结构、清晰度和语言修改 | 本地完整目录复制 |
+| [writing-shape](skills/writing-shape/SKILL.md) | 将材料组织成文章和段落 | 本地完整目录复制 |
+| [writing-beats](skills/writing-beats/SKILL.md) | 叙事展开和概念铺垫 | 本地完整目录复制 |
+| [writing-fragments](skills/writing-fragments/SKILL.md) | 从零散材料中提炼写作内容 | 本地完整目录复制 |
+| [pdf](skills/pdf/SKILL.md) | PDF 读取、生成与视觉检查 | 保留完整目录，包括许可和资源文件 |
+| [lumen-research](skills/lumen-research/SKILL.md) | 科研流程的整合入口 | 独立编写；不替代上面的完整原版 |
+
+`ccfa-paper-writing` 包含完整的 9 个文件：
+
+```text
+ccfa-paper-writing/
+├── SKILL.md
+├── agents/openai.yaml
+├── references/
+│   ├── writing-standard.md
+│   ├── problem-boundary-and-hooks.md
+│   ├── section-playbook.md
+│   ├── revision-and-review.md
+│   └── rendered-layout-audit.md
+└── scripts/
+    ├── audit_prose.py
+    └── test_audit_prose.py
+```
+
+其中包括原版的问题边界、术语钩子、首次缩写定义、减少第一人称、非防御性写作、章节组织、短尾行、页面饱满度、题注间距，以及完整 PDF 逐页视觉检查规则。迁移时没有删减或改写；仅排除了 Python 自动生成的缓存。
 
 ## 核心理念
 
@@ -43,35 +76,33 @@ Lumen Research 将「做了什么」「观察到了什么」「结果支持什�
 
 ### Codex
 
-将仓库克隆到自己选择的位置，把 `skills/lumen-research` **整个文件夹**复制到 `~/.codex/skills/`。例如，假设仓库已经克隆到 `~/work/lumen-research`：
+登录有仓库权限的 GitHub 账号后，先克隆仓库：
+
+```bash
+git clone https://github.com/imhaojie/lumen-research.git ~/work/lumen-research
+```
+
+在尚未安装这些同名 skill 的新电脑上，把 `skills/` 下的完整目录复制到 Codex：
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R ~/work/lumen-research/skills/lumen-research ~/.codex/skills/
+cp -R ~/work/lumen-research/skills/. ~/.codex/skills/
 ```
 
-如果目标目录已经存在，请先检查其中内容，避免覆盖自己之前的修改。完成后重启 Codex 或开启新对话，在对话中使用 `$lumen-research`。
+如果目标目录已经存在同名 skill，请先比较内容，避免覆盖自己之前的修改。完成后重启 Codex 或开启新对话，在对话中使用 `$ccfa-paper-writing` 调用完整论文写作规范，或使用 `$lumen-research` 调用科研整合入口。
 
 ### Claude Code
 
-将同一文件夹复制到 Claude Code 的个人 skill 目录：
+在尚未安装这些同名 skill 的新电脑上，将完整目录复制到 Claude Code 的个人 skill 目录：
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -R ~/work/lumen-research/skills/lumen-research ~/.claude/skills/
+cp -R ~/work/lumen-research/skills/. ~/.claude/skills/
 ```
 
-重新启动 Claude Code 后，可尝试使用 `/lumen-research`；具体调用方式和自动发现行为取决于安装版本。仓库中的 `references/` 必须和 `SKILL.md` 一起复制。
+重新启动 Claude Code 后，可使用 `/ccfa-paper-writing` 或 `/lumen-research`；具体调用方式和自动发现行为取决于安装版本。`references/`、`scripts/`、`agents/` 等必须和对应的 `SKILL.md` 一起复制。
 
-### GitHub 发布后
-
-创建仓库并上传以后，在新电脑上将下面的地址替换成你自己的仓库地址：
-
-```bash
-git clone <YOUR-REPOSITORY-URL> ~/work/lumen-research
-```
-
-然后按上面的 Codex 或 Claude Code 安装步骤复制。克隆不会自动配置联网、GPU、实验环境、MCP 或账户凭证；相关任务需要新电脑具备对应能力。
+克隆不会自动配置联网、GPU、实验环境、MCP 或账户凭证；相关任务需要新电脑具备对应能力。
 
 ### 更新
 
@@ -105,8 +136,9 @@ $lumen-research 分析 results/ 下的实验结果。
 ### 4. 润色论文
 
 ```text
-$lumen-research 帮我润色这篇论文的 Introduction 和 Experiments。
+$ccfa-paper-writing 帮我润色这篇论文的 Introduction 和 Experiments。
 保留实验数字、方法定义和引用，检查问题边界、叙事衔接和证据是否支撑主张。
+严格使用完整 skill 中的语言和格式规则；排版修改后逐页检查最终 PDF。
 ```
 
 ### 5. 准备 rebuttal
@@ -124,7 +156,13 @@ lumen-research/
 ├── README.md
 ├── SOURCES.md
 └── skills/
-    └── lumen-research/
+    ├── ccfa-paper-writing/  # 完整原版：规则、5 份参考、脚本及配置
+    ├── edit-article/
+    ├── writing-shape/
+    ├── writing-beats/
+    ├── writing-fragments/
+    ├── pdf/                # 包含 LICENSE.txt 和 assets/
+    └── lumen-research/     # 科研流程整合入口
         ├── SKILL.md
         └── references/
             ├── discovery.md

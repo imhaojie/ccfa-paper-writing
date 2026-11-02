@@ -1,0 +1,4 @@
+interface:
+  display_name: "CCF-A Paper Writing"
+  short_description: "Write rigorous, visually audited CCF-A papers"
+  default_prompt: "Use $ccfa-paper-writing to revise this paper, enforce exactly-once acronym definitions across the abstract and main body, then render every PDF page and complete the mandatory VLM layout audit for full lines, full pages, compact sections, balanced columns, and tight caption-to-text spacing."
