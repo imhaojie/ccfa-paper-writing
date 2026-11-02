@@ -1,33 +1,37 @@
-# Lumen Research
+# CCF-A Paper Writing
 
-**让每个研究结论，都能找到它的问题、证据与边界。**
+**问题边界清晰，论证一环扣一环，语言严谨自然，排版逐页检查。**
 
-Lumen Research 是一个面向 AI 科研的 Agent Skill。它将文献调研、研究选题、实验设计、结果分析、论文写作、审稿和 rebuttal 组织成一套相互衔接的工作方法，帮助研究者从一个明确的问题出发，形成可检查的证据链。
+这是本地完整的 `ccfa-paper-writing` skill 的迁移与版本管理仓库，面向人工智能顶会英文论文的撰写、重构、润色和提交前检查。核心 skill 保持本地原版的全部规则、参考资料、检查脚本和配置，便于在新电脑继续使用同一套写作标准。
 
-它既可以参与完整研究流程，也可以只解决一个具体任务：比如核查某个 novelty claim、设计一组消融实验、解释统计结果，或逐条回应审稿人。
+> 仓库当前为私有。主 skill 为 `skills/ccfa-paper-writing/`；其他目录是辅助工具，可按需安装。
 
-> 当前状态：私有仓库。除整合入口外，仓库同时保存本地完整论文写作 skill，便于换电脑原样迁移。
+## 核心能力
 
-## 完整论文写作 skill
+| 方面 | 完整规范中的要求 |
+| --- | --- |
+| 研究叙事 | 问题、失败机制、设计要求、方法、证据和结论形成连续论证 |
+| 问题边界 | 明确任务、输入输出、假设、适用场景和实验支持的范围 |
+| 概念铺垫 | 后文概念先有动机和定义，每个技术词都有前文钩子 |
+| 科学表达 | 结论先行、解释机制、用证据支撑主张，减少防御性表述 |
+| 语言风格 | 尽量减少作者第一人称，自然使用被动语态，避免括号堆积和数字罗列 |
+| 缩写与术语 | 每个独立文档首次写全称和缩写，之后保持统一 |
+| 章节组织 | 控制小节数量，避免碎片化标题和技术报告式展开 |
+| PDF 排版 | 检查短尾行、页面留白、栏底平衡、浮动体和题注间距 |
+| 视觉核验 | 渲染后逐页检查，修改影响排版后重新核验 |
+| 事实保护 | 保留实验数值、引用、方法定义和用户锁定的内容 |
 
-**需要原来完整的顶会论文写作规则，请直接使用 `$ccfa-paper-writing`，而不是只安装整合版 `lumen-research`。**
+所有详细要求以 [完整 SKILL.md](skills/ccfa-paper-writing/SKILL.md) 和它引用的参考文件为准。
 
-| 目录 | 内容 | 保存方式 |
-| --- | --- | --- |
-| [ccfa-paper-writing](skills/ccfa-paper-writing/SKILL.md) | 完整 CCF-A 论文写作与排版规范 | 本地原版逐文件复制，保留规则、参考资料、脚本和配置 |
-| [edit-article](skills/edit-article/SKILL.md) | 文章结构、清晰度和语言修改 | 本地完整目录复制 |
-| [writing-shape](skills/writing-shape/SKILL.md) | 将材料组织成文章和段落 | 本地完整目录复制 |
-| [writing-beats](skills/writing-beats/SKILL.md) | 叙事展开和概念铺垫 | 本地完整目录复制 |
-| [writing-fragments](skills/writing-fragments/SKILL.md) | 从零散材料中提炼写作内容 | 本地完整目录复制 |
-| [pdf](skills/pdf/SKILL.md) | PDF 读取、生成与视觉检查 | 保留完整目录，包括许可和资源文件 |
-| [lumen-research](skills/lumen-research/SKILL.md) | 科研流程的整合入口 | 独立编写；不替代上面的完整原版 |
+## 完整文件
 
-`ccfa-paper-writing` 包含完整的 9 个文件：
+核心 skill 共 9 个文件，迁移时原样保留：
 
 ```text
-ccfa-paper-writing/
+skills/ccfa-paper-writing/
 ├── SKILL.md
-├── agents/openai.yaml
+├── agents/
+│   └── openai.yaml
 ├── references/
 │   ├── writing-standard.md
 │   ├── problem-boundary-and-hooks.md
@@ -39,149 +43,115 @@ ccfa-paper-writing/
     └── test_audit_prose.py
 ```
 
-其中包括原版的问题边界、术语钩子、首次缩写定义、减少第一人称、非防御性写作、章节组织、短尾行、页面饱满度、题注间距，以及完整 PDF 逐页视觉检查规则。迁移时没有删减或改写；仅排除了 Python 自动生成的缓存。
+| 文件 | 用途 |
+| --- | --- |
+| [SKILL.md](skills/ccfa-paper-writing/SKILL.md) | skill 入口、核心原则、工作流程与完成标准 |
+| [writing-standard.md](skills/ccfa-paper-writing/references/writing-standard.md) | 语言、论证和科研表达标准 |
+| [problem-boundary-and-hooks.md](skills/ccfa-paper-writing/references/problem-boundary-and-hooks.md) | 问题边界、术语依赖和概念钩子 |
+| [section-playbook.md](skills/ccfa-paper-writing/references/section-playbook.md) | 各论文章节的任务和展开方式 |
+| [revision-and-review.md](skills/ccfa-paper-writing/references/revision-and-review.md) | 修改、审查和提交前检查 |
+| [rendered-layout-audit.md](skills/ccfa-paper-writing/references/rendered-layout-audit.md) | 渲染后逐页视觉审查流程 |
+| [audit_prose.py](skills/ccfa-paper-writing/scripts/audit_prose.py) | 本地语言与格式规则辅助检查 |
+| [test_audit_prose.py](skills/ccfa-paper-writing/scripts/test_audit_prose.py) | 检查脚本的测试 |
+| [openai.yaml](skills/ccfa-paper-writing/agents/openai.yaml) | Codex 展示和默认调用配置 |
 
-## 核心理念
-
-```text
-研究问题 → 最接近的已有工作 → 可检验的假设
-         → 能区分解释的实验 → 可追溯的证据 → 清晰的论文与回应
-```
-
-Lumen Research 将「做了什么」「观察到了什么」「结果支持什么」分开处理。它强调比较条件、数据来源、评估指标、适用范围和不确定性，鼓励提出可以证伪的假设，也保留负结果的研究价值。
-
-## 能做什么
-
-| 场景 | 适合交给 Lumen Research 的任务 | 典型输出 |
-| --- | --- | --- |
-| 文献调研 | 梳理研究方向、阅读关键论文、寻找相近工作 | 文献地图、对比表、研究空白及来源 |
-| 研究选题 | 从方向生成 idea，分析价值、可行性和风险 | 假设、差异点、最小验证实验 |
-| 创新性检查 | 检查问题、机制、评估设置与已有论文的重合 | 近邻论文比较、差异和不确定性 |
-| 实验设计 | 设计主实验、消融、干预和诊断实验 | 假设—对照—指标—结果解释 |
-| 结果分析 | 核对指标、差值、方差与数据口径 | 可追溯的结果表、发现及后续验证 |
-| 论文写作 | 优化论文逻辑、论证、英文表达与术语 | 问题—方法—证据连贯的论文文本 |
-| 审稿与 rebuttal | 拆解审稿意见，寻找已有证据并起草回应 | 问题—证据—策略矩阵及英文回复 |
-
-## 设计原则
-
-1. **证据先行**：数值、论文引用与实验结论必须有来源；缺失的信息明确标记。
-2. **问题有边界**：写清楚任务、输入输出、假设、实验范围和不适用情形。
-3. **叙事一环扣一环**：新概念先有动机，再定义，再用于论证。
-4. **比较要公平**：说清数据、模型、训练预算、评价协议和统计单位。
-5. **表达有力度，也有分寸**：有直接证据时清楚陈述；证据不足时明确限定，不靠防御性措辞掩盖问题。
-6. **研究者掌握方向**：按照用户要求选择需要的阶段，不因为使用了 skill 就自动启动训练或提交内容。
-7. **跨环境使用**：不依赖特定模型名、服务器路径或某个固定 MCP 服务。
+仅排除 Python 自动生成的缓存。请复制整个目录，避免遗漏参考资料或脚本。
 
 ## 安装
 
-### Codex
-
-登录有仓库权限的 GitHub 账号后，先克隆仓库：
+先登录有私有仓库权限的 GitHub 账号，克隆到自己选择的位置。以下示例使用 `~/work/ccfa-paper-writing`：
 
 ```bash
-git clone https://github.com/imhaojie/lumen-research.git ~/work/lumen-research
+git clone https://github.com/imhaojie/ccfa-paper-writing.git ~/work/ccfa-paper-writing
 ```
 
-在尚未安装这些同名 skill 的新电脑上，把 `skills/` 下的完整目录复制到 Codex：
+### Codex
+
+在尚未安装同名 skill 的新电脑上：
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R ~/work/lumen-research/skills/. ~/.codex/skills/
+cp -R ~/work/ccfa-paper-writing/skills/ccfa-paper-writing ~/.codex/skills/
 ```
 
-如果目标目录已经存在同名 skill，请先比较内容，避免覆盖自己之前的修改。完成后重启 Codex 或开启新对话，在对话中使用 `$ccfa-paper-writing` 调用完整论文写作规范，或使用 `$lumen-research` 调用科研整合入口。
+重启 Codex 或开启新对话，然后使用 `$ccfa-paper-writing`。如果目标目录已经存在，请先比较版本，保留自己已有的修改。
 
 ### Claude Code
 
-在尚未安装这些同名 skill 的新电脑上，将完整目录复制到 Claude Code 的个人 skill 目录：
-
 ```bash
 mkdir -p ~/.claude/skills
-cp -R ~/work/lumen-research/skills/. ~/.claude/skills/
+cp -R ~/work/ccfa-paper-writing/skills/ccfa-paper-writing ~/.claude/skills/
 ```
 
-重新启动 Claude Code 后，可使用 `/ccfa-paper-writing` 或 `/lumen-research`；具体调用方式和自动发现行为取决于安装版本。`references/`、`scripts/`、`agents/` 等必须和对应的 `SKILL.md` 一起复制。
+重新启动后使用 `/ccfa-paper-writing`；具体发现和加载行为以实际安装版本为准。同名目录已存在时，先比较内容再更新。
 
-克隆不会自动配置联网、GPU、实验环境、MCP 或账户凭证；相关任务需要新电脑具备对应能力。
+### 按需安装辅助 skill
 
-### 更新
+仓库也保留以下完整目录：
 
-在仓库目录拉取新版本后，先比较本机已安装版本是否有独立修改，再更新对应 skill 目录。建议把 Git 仓库作为维护源，避免在多个位置分别修改后产生版本冲突。不要将 API Key、私有审稿意见、实验数据或服务器凭证放进公开仓库。
+| Skill | 用途 |
+| --- | --- |
+| [edit-article](skills/edit-article/SKILL.md) | 文章结构和语言编辑 |
+| [writing-shape](skills/writing-shape/SKILL.md) | 从材料组织文章与段落 |
+| [writing-beats](skills/writing-beats/SKILL.md) | 叙事展开和概念铺垫 |
+| [writing-fragments](skills/writing-fragments/SKILL.md) | 提炼零散写作材料 |
+| [pdf](skills/pdf/SKILL.md) | PDF 处理和视觉检查，附带原有许可与资源 |
+| [lumen-research](skills/lumen-research/SKILL.md) | 之前整理的科研流程入口，可选安装 |
+
+安装辅助工具时，将需要的完整目录复制到对应平台的 skill 目录即可。
 
 ## 使用示例
 
-### 1. 梳理研究方向
+### 整篇论文润色
 
 ```text
-$lumen-research 帮我梳理音频视觉分割中声音与运动对齐的研究。
-请比较最相关的论文，指出各自的问题设定、方法差异和可验证的研究空白。
-请给出原论文链接，并标出检索范围和日期。
+$ccfa-paper-writing 仔细阅读正文、补充材料和实验结果记录，
+先分析叙事、问题边界和证据链，再润色全文。
+保持实验数值、方法定义和引用不变，修改排版后逐页检查 PDF。
 ```
 
-### 2. 设计最小实验
+### 局部章节修改
 
 ```text
-$lumen-research 我有一个多模态对齐方法。请先阅读项目中的方法描述和现有结果，
-设计最少的消融和干预实验，说明每组实验排除什么替代解释，
-以及不同结果分别支持什么结论。先不要启动训练。
+$ccfa-paper-writing 润色 Abstract、Introduction 和 Related Work。
+围绕论文的核心问题和贡献展开，减少括号、数据堆砌和防御性表述，
+保证术语首次出现前有动机，缩写定义后统一使用。
 ```
 
-### 3. 分析已有结果
+### 排版检查
 
 ```text
-$lumen-research 分析 results/ 下的实验结果。
-请区分绝对提升和相对提升，核对多种子统计，明确哪些结论能够由现有数据支持。
+$ccfa-paper-writing 渲染最终 PDF 并逐页检查短尾行、页面留白、
+双栏平衡、图表位置和题注间距。只进行有科学意义的小范围扩写或改写，
+保留论文事实，遵守会议模板。
 ```
 
-### 4. 润色论文
+### 提交前审查
 
 ```text
-$ccfa-paper-writing 帮我润色这篇论文的 Introduction 和 Experiments。
-保留实验数字、方法定义和引用，检查问题边界、叙事衔接和证据是否支撑主张。
-严格使用完整 skill 中的语言和格式规则；排版修改后逐页检查最终 PDF。
+$ccfa-paper-writing 检查正文与补充材料的主张、结果、术语和交叉引用，
+指出未解决的问题。先报告发现，未经授权不要修改已提交版本。
 ```
 
-### 5. 准备 rebuttal
+## 本地检查
 
-```text
-$lumen-research 结合提交的正文、补充材料和全部审稿意见，
-建立逐条问题—证据—回应策略矩阵，指出真正需要补实验的问题，
-再根据字数限制撰写英文 rebuttal。不得虚构结果或修改已提交正文。
+检查脚本为辅助工具，其提示需要结合上下文判断：
+
+```bash
+python3 skills/ccfa-paper-writing/scripts/audit_prose.py path/to/paper.tex
 ```
 
-## 项目结构
+运行脚本测试：
 
-```text
-lumen-research/
-├── README.md
-├── SOURCES.md
-└── skills/
-    ├── ccfa-paper-writing/  # 完整原版：规则、5 份参考、脚本及配置
-    ├── edit-article/
-    ├── writing-shape/
-    ├── writing-beats/
-    ├── writing-fragments/
-    ├── pdf/                # 包含 LICENSE.txt 和 assets/
-    └── lumen-research/     # 科研流程整合入口
-        ├── SKILL.md
-        └── references/
-            ├── discovery.md
-            ├── experiments.md
-            ├── writing.md
-            └── review-rebuttal.md
+```bash
+cd skills/ccfa-paper-writing
+python3 -m unittest discover -s scripts -p 'test_*.py'
 ```
 
-`SKILL.md` 负责选择任务与核心原则；详细流程按需从 `references/` 加载。不同平台对 skill 的发现、权限、搜索和执行能力可能不同，具体行为以实际环境为准。
+PDF 编译、渲染和视觉检查需要使用环境提供对应能力；复制 skill 文件不会自动安装 LaTeX、渲染工具或配置模型。
 
-## 不适合期待什么
+## 更新与来源
 
-- 它不能单凭模型记忆保证文献检索完整，也不能证明一个想法绝对新颖。
-- 它不会把缺少原始记录的结果变成可复现结果，也不会把拟议实验写成已完成实验。
-- 它不会自动获得 GPU、搜索权限、付费 API 或外部评审资格。
-- 研究判断、数据真实性、投稿规定和最终提交仍需要研究者核对。
+将本仓库作为维护和迁移的版本源。更新时先拉取仓库，再比较已安装目录是否存在独立修改。原有本地 skill 保持原样；本次整理将其完整副本保存到仓库。
 
-## 来源与公开发布
-
-本项目是对作者既有科研工作习惯及本地 skill 流程的独立整理。灵感、参考来源和待核验事项见 [SOURCES.md](SOURCES.md)。
-
-本地初版尚未选择开源许可证；将仓库公开或宣称可自由再分发前，请先确认素材来源和权利，并由项目所有者选择适当的许可证。不要在未经核验的情况下将第三方 skill 原文打包为个人原创。
+参考来源、完整备份说明与公开准备事项见 [SOURCES.md](SOURCES.md)。仓库当前为私有，尚未选择统一的开源许可证；附带的第三方许可文件继续保留。
